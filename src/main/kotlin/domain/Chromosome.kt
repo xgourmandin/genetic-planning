@@ -19,4 +19,4 @@ class Gene(val employees: List<Employee>) {
 
 fun Population.bestFitnessScore(): Double = maxOf { it.fitnessScore() }
 
-fun Population.getBestChromosome(): Chromosome? = maxByOrNull { it.fitnessScore() }
+fun Population.bestChromosome(): Chromosome? = maxByOrNull { it.fitnessScore() }

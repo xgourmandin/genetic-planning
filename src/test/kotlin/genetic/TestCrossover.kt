@@ -21,6 +21,6 @@ class TestCrossover {
 
     class FixedRandom: Random() {
         override fun nextBits(bitCount: Int): Int = 2
-        override fun nextInt(range: Int): Int = 2
+        override fun nextInt(until: Int): Int = 2
     }
 }

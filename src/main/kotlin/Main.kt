@@ -1,7 +1,7 @@
 import configuration.Configuration
 import domain.Population
 import domain.bestFitnessScore
-import domain.getBestChromosome
+import domain.bestChromosome
 import genetic.Selection
 import genetic.crossover
 import genetic.mutate
@@ -11,7 +11,7 @@ import kotlin.random.Random
 private val random: Random = Random.Default
 private val configuration: Configuration = Configuration()
 
-fun main(args: Array<String>) {
+fun main() {
     var population = Initializer(configuration).initializePopulation()
     val selector = Selection()
     for (gen in 1..1000) {
@@ -41,5 +41,5 @@ fun main(args: Array<String>) {
         }
     }
 
-    population.getBestChromosome()?.let { println("Best chromosome : $it") }
+    population.bestChromosome()?.let { println("Best chromosome : $it") }
 }

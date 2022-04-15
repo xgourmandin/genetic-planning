@@ -2,6 +2,7 @@ package genetic
 
 import domain.Chromosome
 import domain.Gene
+import java.security.SecureRandom
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,12 +15,11 @@ class TestMutation {
             Gene(listOf("N05", "N06")), Gene(listOf("N07", "N08")))
         val chromosome = Chromosome(genes)
         val mutated = chromosome.mutate(FixedRandom())
-        assertEquals("N01,N02,N05,N06,N03,N04,N07,N08", mutated.genes.flatMap { it.employees }.joinToString(","))
+        assertEquals("N01,N02,N05,N06,N03,N04,N07,N08", mutated.genes.flatMap { it.nurses }.joinToString(","))
     }
 
-    class FixedRandom: Random() {
+    class FixedRandom: SecureRandom() {
         private var count = 1
-        override fun nextBits(bitCount: Int): Int = 2
         override fun nextInt(until: Int): Int = count++
     }
 }

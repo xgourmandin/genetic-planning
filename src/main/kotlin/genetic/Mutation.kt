@@ -1,11 +1,12 @@
 package genetic
 
 import domain.Chromosome
+import java.security.SecureRandom
 import kotlin.math.max
 import kotlin.math.min
 import kotlin.random.Random
 
-fun Chromosome.mutate(random: Random): Chromosome {
+fun Chromosome.mutate(random: SecureRandom): Chromosome {
     val pointA = random.nextInt(genes.size)
     var pointB = random.nextInt(genes.size)
     while(pointA == pointB) {

@@ -3,7 +3,7 @@ package domain
 import genetic.fitnessScore
 
 typealias Population = List<Chromosome>
-typealias Employee = String
+typealias Nurse = String
 
 class Chromosome(val genes: List<Gene>) {
     override fun toString(): String {
@@ -11,12 +11,12 @@ class Chromosome(val genes: List<Gene>) {
     }
 }
 
-class Gene(val employees: List<Employee>) {
+class Gene(val nurses: List<Nurse>) {
     override fun toString(): String {
-        return employees.joinToString(separator = ", ") { it }
+        return nurses.joinToString(separator = ", ") { it }
     }
 }
 
-fun Population.bestFitnessScore(): Double = maxOf { it.fitnessScore() }
+fun Population.bestFitnessScore(printDetails:Boolean = false): Double = maxOf { it.fitnessScore(printDetails) }
 
 fun Population.bestChromosome(): Chromosome? = maxByOrNull { it.fitnessScore() }

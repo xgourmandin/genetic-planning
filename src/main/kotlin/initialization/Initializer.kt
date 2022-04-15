@@ -2,7 +2,7 @@ package initialization
 
 import domain.Chromosome
 import configuration.Configuration
-import domain.Employee
+import domain.Nurse
 import domain.Gene
 import domain.Population
 import java.security.SecureRandom
@@ -18,12 +18,12 @@ class Initializer(val config: Configuration) {
         Chromosome(genes)
     }
 
-    private fun randomEmployeePool(): List<Employee> {
+    private fun randomEmployeePool(): List<Nurse> {
         val employeesCode = (0 until config.totalEmployees).map { i ->
             "N${i+1}"
         }
         val poolSize = config.planningDurationInDays * config.workShiftsPerDay * config.employeePerWorkShift
-        val employees: List<Employee> = (0..poolSize).map { employeesCode[random.nextInt(config.totalEmployees)] }
+        val employees: List<Nurse> = (0..poolSize).map { employeesCode[random.nextInt(config.totalEmployees)] }
         return employees.shuffled(random)
     }
 

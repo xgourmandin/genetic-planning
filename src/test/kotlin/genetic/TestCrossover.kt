@@ -2,6 +2,7 @@ package genetic
 
 import domain.Chromosome
 import domain.Gene
+import java.security.SecureRandom
 import kotlin.random.Random
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -14,13 +15,11 @@ class TestCrossover {
         val c1 = Chromosome(genes1)
         val genes2 = listOf(Gene(listOf("N05", "N06")), Gene(listOf("N07", "N08")))
         val c2 = Chromosome(genes2)
-        val childs = c1.crossover(c2, FixedRandom())
-        assertEquals("N01,N02,N07,N08", childs.first.genes.flatMap { it.employees }.joinToString(","))
-        assertEquals("N03,N04,N05,N06", childs.second.genes.flatMap { it.employees }.joinToString(","))
+        val child = c1.crossover(c2, FixedRandom())
+        assertEquals("N01,N02,N07,N08", child.genes.flatMap { it.nurses }.joinToString(","))
     }
 
-    class FixedRandom: Random() {
-        override fun nextBits(bitCount: Int): Int = 2
-        override fun nextInt(until: Int): Int = 2
+    class FixedRandom: SecureRandom() {
+        override fun nextInt(until: Int): Int = 1
     }
 }

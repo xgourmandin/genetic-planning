@@ -14,6 +14,6 @@ class TestInitializer {
         val firstChromosome = population[0]
         assertEquals(firstChromosome.genes.size, initializer.config.planningDurationInDays* initializer.config.workShiftsPerDay)
         val firstGene = firstChromosome.genes[0]
-        assertEquals(firstGene.employees.size, initializer.config.employeePerWorkShift)
+        assertEquals(firstGene.nurses.size, initializer.config.employeePerWorkShift)
     }
 }

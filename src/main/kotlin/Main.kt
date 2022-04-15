@@ -1,45 +1,37 @@
 import configuration.Configuration
-import domain.Population
-import domain.bestFitnessScore
-import domain.bestChromosome
+import domain.Chromosome
 import genetic.Selection
 import genetic.crossover
+import genetic.fitnessScore
 import genetic.mutate
 import initialization.Initializer
-import kotlin.random.Random
+import java.security.SecureRandom
 
-private val random: Random = Random.Default
+private val random: SecureRandom = SecureRandom()
 private val configuration: Configuration = Configuration()
 
 fun main() {
-    var population = Initializer(configuration).initializePopulation()
-    val selector = Selection()
-    for (gen in 1..1000) {
-        println("Best score in population : ${population.bestFitnessScore()}")
-        if (population.bestFitnessScore() == 1.0) {
-            println("Target reached in $gen generations")
-            break
-        }
-        val newPopulation = selector.selection(population, configuration)
-        val breadedPopulation: Population = newPopulation.withIndex().flatMap { (index, p) ->
-            if (random.nextDouble() < configuration.crossoverProbability) {
-                val partnerIndex = random.nextInt(newPopulation.size)
-                val partner =
-                    if (partnerIndex != index) newPopulation[partnerIndex] else newPopulation[(partnerIndex + 1) % newPopulation.size]
-                val crossover = p.crossover(partner, random)
-                return@flatMap listOf(crossover.first, crossover.second)
-            } else {
-                return@flatMap listOf(p)
-            }
-        }
-        population = breadedPopulation.map {
-            if (random.nextDouble() < configuration.mutationProbability) {
-                return@map it.mutate(random)
-            } else {
-                return@map it
-            }
-        }
+    val selector = Selection(random)
+    var scoredPopulation = Initializer(configuration).initializePopulation().map { Pair(it.fitnessScore(), it) }.sortedByDescending { it.first }
+
+
+    for (i in 0..configuration.maxGenerations) {
+         println("population size: ${scoredPopulation.size} on gen $i")
+        duplicatedGenesInPopulation(scoredPopulation)
+        scoredPopulation = scoredPopulation
+            .map { Pair(selector.selection(scoredPopulation), selector.selection(scoredPopulation)) }
+            .map { it.first.crossover(it.second, random) }
+            .map { if (random.nextDouble() <= configuration.mutationProbability) it.mutate(random) else it }
+            .map { Pair(it.fitnessScore(), it) }
+            .sortedByDescending { it.first }
     }
 
-    population.bestChromosome()?.let { println("Best chromosome : $it") }
+    val bestOne = scoredPopulation.first()
+    println(bestOne.first)
+    println(bestOne.second)
+}
+
+fun duplicatedGenesInPopulation(population: List<Pair<Double, Chromosome>>) {
+    val genes = population.map { it.second.genes }.flatten()
+    genes.groupingBy { it.toString() }.eachCount().filter { it.value > 1 }.toList().sortedByDescending { it.second }.forEach { println(it) }
 }

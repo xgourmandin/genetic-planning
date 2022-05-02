@@ -16,10 +16,10 @@ fun Chromosome.fitnessScore(printDetails: Boolean = false): Double {
             if (genes[(index + 1) % genes.size].nurses.contains(e)) {
                 twoConsecutiveShifts++
             }
+            nurseMetrics.getValue(e).totalCycleShifts += 1
         }
-        g.nurses.forEach { nurseMetrics.getValue(it).totalCycleShifts += 1 }
     }
-    val overBookedNurses = nurseMetrics.values.map { if (it.totalCycleShifts > 7) 1 else 0 }.reduce(Int::plus)
+    val overBookedNurses = nurseMetrics.values.sumOf { if (it.totalCycleShifts > 7) 1.toInt() else 0 }
     if (printDetails) {
         println("Scoring details")
         println(nurseMetrics)

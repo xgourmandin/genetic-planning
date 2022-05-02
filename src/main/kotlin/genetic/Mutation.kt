@@ -5,7 +5,6 @@ import domain.Gene
 import java.security.SecureRandom
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.random.Random
 
 fun Chromosome.mutate(random: SecureRandom): Chromosome {
     val pointA = random.nextInt(genes.size)

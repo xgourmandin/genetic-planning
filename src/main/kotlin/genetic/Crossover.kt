@@ -1,12 +1,10 @@
 package genetic
 
 import domain.Chromosome
-import utils.random
 import java.security.SecureRandom
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.min
-import kotlin.random.Random
 
 fun Chromosome.singlePointCrossover(other: Chromosome, random: SecureRandom): Chromosome {
     val crossoverPoint = random.nextInt(0, genes.size)

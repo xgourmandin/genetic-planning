@@ -1,8 +1,7 @@
 package genetic
 
-import domain.Chromosome
 import configuration.Configuration
-import domain.Nurse
+import domain.Chromosome
 import domain.Gene
 import domain.Population
 import java.security.SecureRandom

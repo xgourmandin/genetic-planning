@@ -1,7 +1,6 @@
 package genetic
 
 import configuration.Configuration
-import initialization.Initializer
 import kotlin.test.Test
 import kotlin.test.assertTrue
 

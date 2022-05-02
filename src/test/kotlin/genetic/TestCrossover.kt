@@ -15,7 +15,7 @@ class TestCrossover {
         val c1 = Chromosome(genes1)
         val genes2 = listOf(Gene(listOf("N05", "N06")), Gene(listOf("N07", "N08")))
         val c2 = Chromosome(genes2)
-        val child = c1.crossover(c2, FixedRandom())
+        val child = c1.singlePointCrossover(c2, FixedRandom())
         assertEquals("N01,N02,N07,N08", child.genes.flatMap { it.nurses }.joinToString(","))
     }
 

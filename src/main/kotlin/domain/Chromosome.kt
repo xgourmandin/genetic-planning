@@ -20,3 +20,4 @@ class Gene(val nurses: List<Nurse>) {
 fun Population.bestFitnessScore(printDetails:Boolean = false): Double = maxOf { it.fitnessScore(printDetails) }
 
 fun Population.bestChromosome(): Chromosome? = maxByOrNull { it.fitnessScore() }
+fun Population.worstChromosome(): Chromosome? = minByOrNull { it.fitnessScore() }
